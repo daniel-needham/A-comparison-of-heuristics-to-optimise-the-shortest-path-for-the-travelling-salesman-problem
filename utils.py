@@ -31,5 +31,15 @@ def plot_fitness_by_iter(fitnesses, iter):
     plt.plot(range(1, iter + 1), fitnesses)
     plt.title("Best fitness in the population by iteration")
     plt.xlabel('Iteration')
-    plt.ylabel('Fitness(Total Distance for Journey)')
+    plt.ylabel('Fitness (Total Distance for Journey)')
+    plt.show()
+
+
+def plot_mean_fitness_by_iter(fitnesses, iter):
+    """Plots the mean fitnesses by iteration"""
+    plt.figure(figsize=(10, 10))
+    plt.plot(range(1, iter + 1), fitnesses)
+    plt.title("Mean fitness in the population by iteration")
+    plt.xlabel('Iteration')
+    plt.ylabel('Fitness (Total Distance for Journey)')
     plt.show()

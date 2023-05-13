@@ -17,6 +17,15 @@ class Cities:
     def __init__(self):
         """Initializes the list of cities"""
         self.cities = np.load('cities.npy')
+        self.distance_matrix = self.create_distance_matrix()
+
+    def create_distance_matrix(self):
+        """Creates a distance matrix for the cities"""
+        distance_matrix = np.zeros((len(self.cities), len(self.cities)))
+        for i in range(len(self.cities)):
+            for j in range(len(self.cities)):
+                distance_matrix[i, j] = self.distance(i, j)
+        return distance_matrix
 
     def get_cities(self):
         """Returns the list of cities"""

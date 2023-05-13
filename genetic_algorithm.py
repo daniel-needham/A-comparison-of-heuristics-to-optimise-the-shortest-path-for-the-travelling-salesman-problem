@@ -35,7 +35,7 @@ class MicrobialGA:
         for i in range(iterations):
             if i % 100 == 0: print(f'Iteration {i}/{iterations}')
             for _ in range(len(self.population)):
-                comb1, comb2 = self.tournament_selection(self.population)
+                comb1, comb2 = self.selection_type(self.population)
                 w, l = self.combat(comb1, comb2)
                 l_geno = self.pmx_crossover(w[0], l[0], slice_length=self.pmx_slice_length)
                 _, l_index = l
@@ -58,10 +58,23 @@ class MicrobialGA:
         rand_index2 = rand_index2 % len(population)
         return (population[rand_index], rand_index), (population[rand_index2], rand_index2)
 
-    def roulette_selection(self, population):
-        """Performs roulette selection on the population"""
-        fitnesses = self.pop_fitnesses / np.sum(self.pop_fitnesses)
-        return np.random.choice(population, 2, p=fitnesses)
+# todo fix roulette and rank selection
+    # def roulette_selection(self, population):
+    #     """Performs roulette selection on the population"""
+    #     fitnesses = self.pop_fitnesses / np.sum(self.pop_fitnesses)
+    #     roul_i = random.choices(range(len(population)), weights=fitnesses, k=1)
+    #     roul_i2 = roul_i # Make sure we don't pick the same individual twice
+    #     fitnesses = fitnesses[(roul_i - self.local_neighbourhood) : (roul_i2 + self.local_neighbourhood)]
+    #     print(fitnesses)
+    #     while roul_i2 == roul_i:
+    #         random.choices(range(roul_i - self.local_neighbourhood, roul_i2 + self.local_neighbourhood), weights=fitnesses, k=1)
+    #
+    # def rank_selection(self, population):
+    #     """Performs rank selection on the population"""
+    #     fitnesses = np.argsort(self.pop_fitnesses)
+    #     rank_i, rank_i2 = random.choice(range(len(population)), 2, p=fitnesses)
+    #     return (population[rank_i], rank_i), (population[rank_i2], rank_i2)
+
 
     def combat(self, comb1, comb2):
         """Performs combat between two individuals"""
