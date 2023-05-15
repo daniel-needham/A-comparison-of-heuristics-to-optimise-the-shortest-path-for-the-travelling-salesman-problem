@@ -21,6 +21,9 @@ class ACO:
 
     def next_city(self, current_city, unvisited_cities):
         """Returns the next city for an ant based on pheromone and heuristic information"""
+        """:param current_city: The current city of the ant"""
+        """:param unvisited_cities: list of cities that the ant has not visited yet"""
+        """:return: the next city for the ant to visit"""
         # Calculate the probabilities for the ant to go to the next city
         denom = sum((self.pheromone_matrix[current_city][j] ** self.alpha) * (
                 (1 / self.distance_matrix[current_city][j]) ** self.beta) for j in unvisited_cities)
@@ -37,6 +40,7 @@ class ACO:
 
     def ant_tour(self):
         """Sends an ant on a tour"""
+        """:return: the tour of the ant"""
         start_city = random.randint(0, self.number_of_cities - 1)
         unvisited_cities = [i for i in range(self.number_of_cities) if i != start_city]
         current_city = start_city
@@ -52,10 +56,14 @@ class ACO:
 
     def tour_length(self, tour):
         """Calculates the length of a tour"""
+        """:param tour: the tour to calculate the length of"""
+        """:return: the length of the tour"""
         return self.cities.total_distance(tour)
 
     def update_pheromones(self, tours):
         """Updates the pheromone matrix based on the tours"""
+        """:param tours: the tours to update the pheromone matrix with"""
+        """:return: None"""
         self.pheromone_matrix *= (1 - self.rho)
         for tour in tours:
             distance = self.tour_length(tour)
@@ -65,6 +73,8 @@ class ACO:
 
     def iterate(self, iterations):
         """Runs the ant colony optimisation algorithm for a given number of iterations"""
+        """:param iterations: the number of iterations to run the algorithm for"""
+        """:return: the best path, the distance of the best path, and the best distance by iteration"""
         for iteration in range(iterations):
             tours = [self.ant_tour() for _ in range(self.ants)]
             self.update_pheromones(tours)

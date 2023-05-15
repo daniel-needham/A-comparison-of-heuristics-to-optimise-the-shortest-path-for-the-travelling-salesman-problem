@@ -5,6 +5,7 @@ import numpy as np
 class HillClimber:
     def __init__(self, population_size=100):
         """Initializes the hill climber"""
+
         self.population = None
         self.cities = Cities()
         self.city_list = self.cities.get_city_list()
@@ -18,9 +19,10 @@ class HillClimber:
         """Climbs the hill for a given number of iterations"""
         best_fitness_epoch = []
         for i in range(iterations):
-            if i % 100 == 0: print(f'Iteration {i}/{iterations}')
             self.population = self.mutate(self.population)
             best_fitness_epoch.append(self.get_best_fitness())
+            if i % 100 == 0:
+                print("Iteration: {}/{}, Best Distance: {}".format(i, iterations, best_fitness_epoch[-1]))
         self.population = self.population[np.argsort([self.cities.total_distance(genotype) for genotype in self.population])]
         return self.population[0], self.cities.total_distance(self.population[0]), best_fitness_epoch
 
